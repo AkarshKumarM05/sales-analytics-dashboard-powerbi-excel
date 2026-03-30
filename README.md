@@ -322,4 +322,3 @@ B.Com (Hons) | Data Analytics Enthusiast
 
 ---
 
-**Built with 💙 by Akarsh Kumar Pandey** | *Transforming Data into Insights*
