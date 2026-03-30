@@ -217,12 +217,11 @@ The Power BI dashboard provides **interactive visualizations** across key sales 
 
 ### Key Metrics (KPI Cards)
 
-- Total Sales: **$XXX,XXX**
-- Total Profit: **$XX,XXX**
-- Profit Margin: **XX%**
-- Total Orders: **X,XXX**
-- Total Customers: **X,XXX**
-- Average Order Value: **$XXX**
+- Total Sales: **₹438,000**
+- Total Profit: **₹37,000**
+- Profit Margin: **8.45%**
+- Total Orders: **5,615 units**
+- Average Order Value: **₹121,000**
 
 ### Visualizations
 
