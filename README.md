@@ -304,7 +304,7 @@ Based on the sales analytics findings:
 
 **Full Dashboard View**
 
-[Dashboard View](./assets/sales_dashboard_screenshot.png)
+[Dashboard View](.assets/Screenshot%202026-03-26%20233720.png)
 
 ---
 
