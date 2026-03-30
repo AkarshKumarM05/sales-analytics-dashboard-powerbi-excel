@@ -388,32 +388,14 @@ DIVIDE(
 
 ---
 
-## 📞 Connect
+## 👨‍💻 Author & Contact
 
-**Akarsh Kumar M**
+**Akarsh Kumar Pandey**  
+B.Com (Hons) | Data Analytics Enthusiast
 
-- 💼 [LinkedIn](https://www.linkedin.com/in/akarshkumarm05)
-- 🐱 [GitHub](https://github.com/AkarshKumarM05)
-- 📧 Email: akarshkumar.work@gmail.com
-
+[![Gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:tulnama02@gmail.com)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/akarshkpandey)
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/AkarshKumarM05)
 ---
 
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🙏 Acknowledgments
-
-- Dataset: Sales data for analytics practice
-- Community: Power BI community for best practices
-- Tools: Microsoft Power BI and Excel teams
-
----
-
-### ⭐ If you found this project helpful, please consider giving it a star!
-
----
-
-**Built with 💙 by Akarsh Kumar M** | *Transforming Data into Insights*
+> ⭐ If you found this project useful, please give it a star — it helps a lot!
