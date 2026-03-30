@@ -24,8 +24,7 @@
 - [Final Recommendations](#-final-recommendations)
 - [Dashboard Screenshots](#-dashboard-screenshots)
 - [Author & Contact](#-author--contact)
-- [Detailed Project Workflow](#-detailed-project-workflow)
-
+  
 ---
 
 ## 📖 Overview
