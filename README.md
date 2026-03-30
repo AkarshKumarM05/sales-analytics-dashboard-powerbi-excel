@@ -9,382 +9,303 @@
 
 ---
 
-## 📑 Table of Contents
+## 📌 Table of Contents
 
-- [Overview](#overview)
-- [Business Problem](#business-problem)
-- [Dataset](#dataset)
-- [Data Model](#data-model)
-- [DAX Measures](#dax-measures)
-- [Key Visualizations](#key-visualizations)
-- [Insights & Recommendations](#insights--recommendations)
-- [Technical Specifications](#technical-specifications)
-- [How to Use](#how-to-use)
-- [Future Enhancements](#future-enhancements)
-- [Connect](#connect)
+- [Overview](#-overview)
+- [Business Problem](#-business-problem)
+- [Dataset](#-dataset)
+- [Tools & Technologies](#️-tools--technologies)
+- [Project Structure](#️-project-structure)
+- [Data Cleaning & Preparation](#-data-cleaning--preparation)
+- [Exploratory Data Analysis (EDA)](#-exploratory-data-analysis-eda)
+- [Research Questions & Key Insights](#-research-questions--key-insights)
+- [Dashboard](#-dashboard)
+- [How to Run This Project](#-how-to-run-this-project)
+- [Final Recommendations](#-final-recommendations)
+- [Dashboard Screenshots](#-dashboard-screenshots)
+- [Author & Contact](#-author--contact)
 
 ---
 
-## 🎯 Overview
+## 📖 Overview
 
-This **Sales Analytics Dashboard** provides comprehensive insights into sales performance across multiple dimensions including time periods, product categories, customer segments, and geographical regions. Built with Power BI and Excel, it enables stakeholders to make data-driven decisions through interactive visualizations and KPI tracking.
+This project analyzes **Sales Analytics** data to understand revenue performance, customer purchasing patterns, product trends, and geographical sales distribution. The goal is to help sales managers and business leaders make data-driven decisions to maximize revenue, improve customer retention, and optimize product strategies.
 
-### Project Highlights:
-- **📈 Revenue Analysis**: Track total sales, profit margins, and growth trends
-- **🛍️ Product Performance**: Identify top-selling products and categories
-- **👥 Customer Insights**: Analyze customer behavior and segmentation
-- **🌍 Geographic Analysis**: Compare sales performance across regions
-- **📊 Time Intelligence**: Year-over-year and month-over-month comparisons
+The dashboard was built in **Power BI Desktop** with custom **DAX measures**, covering:
+
+- Revenue analysis and profit margins
+- Customer segmentation and behavior
+- Product performance and category analysis
+- Geographical sales distribution
+- Time-based trends and seasonal patterns
 
 ---
 
 ## 💼 Business Problem
 
-### Challenge
-The sales team needed a centralized analytics solution to:
-1. Monitor real-time sales performance against targets
-2. Identify underperforming products and regions
-3. Understand customer purchasing patterns
-4. Optimize inventory and resource allocation
-5. Forecast future sales trends
+Sales teams struggle with understanding revenue drivers, customer preferences, and product performance. This project addresses the following business challenges:
 
-### Objectives
-- Create an interactive dashboard for sales monitoring
-- Implement DAX measures for advanced analytics
-- Enable drill-down capabilities for detailed analysis
-- Provide actionable insights for strategic planning
-- Track KPIs including revenue, profit, units sold, and customer metrics
+- **No centralized sales tracking** — Sales teams lack a unified dashboard to monitor revenue, profit, and key metrics
+- **Limited customer insights** — It's unclear which customer segments generate the most revenue and have the highest lifetime value
+- **No product performance visibility** — The relationship between products, categories, and profitability is not analyzed
+- **Geographic blindspots** — Certain regions may have untapped potential but go unnoticed
+- **Difficulty tracking trends** — No visibility into seasonal patterns, growth trends, or forecasting
+- **Decision-making gaps** — Sales cannot proactively identify opportunities or implement targeted strategies
 
 ---
 
-## 📊 Dataset
+## 📁 Dataset
 
-### Data Source
-The dataset includes transactional sales data with the following characteristics:
+- **Source:** Sales Transaction Data (Sample Dataset)
+- **File:** `Sales_Data.csv`
+- **Records:** Thousands of transactions
+- **Dimensions:** Customer, Product, Geography, Time
 
-**Key Features:**
-- **Order Details**: Order ID, Order Date, Ship Date, Ship Mode
-- **Customer Information**: Customer ID, Customer Name, Segment, Region
-- **Product Details**: Product ID, Product Name, Category, Sub-Category
-- **Financial Metrics**: Sales Amount, Quantity, Discount, Profit
-- **Geographic Data**: Country, State, City, Postal Code
+### Key Columns:
 
-**Dataset Size:**
-- Time Period: Multiple years of historical data
-- Records: Thousands of transactions
-- Dimensions: Customer, Product, Geography, Time
-
-### Data Quality
-- Data cleaning performed in Excel
-- Handled missing values and duplicates
-- Standardized date formats
-- Created calculated columns for analysis
-
----
-
-## 🔗 Data Model
-
-Implemented a **star schema** with:
-
-### Fact Table:
-- **Sales_Fact**: Contains all transactional measures
-
-### Dimension Tables:
-- **Date_Dim**: Calendar table with fiscal periods
-- **Product_Dim**: Product hierarchy (Category → Sub-Category → Product)
-- **Customer_Dim**: Customer segmentation details
-- **Geography_Dim**: Location hierarchy (Region → State → City)
-
-### Relationships:
-- One-to-many relationships from dimensions to fact table
-- Bi-directional cross-filtering where necessary
+| Column | Description |
+|--------|-------------|
+| `Order ID` | Unique order identifier |
+| `Order Date` | Date of order placement |
+| `Ship Date` | Date of shipment |
+| `Ship Mode` | Shipping method used |
+| `Customer ID` | Unique customer identifier |
+| `Customer Name` | Name of the customer |
+| `Segment` | Customer segment (Consumer/Corporate/Home Office) |
+| `Region` | Geographic region |
+| `Country` | Country name |
+| `State` | State/Province |
+| `City` | City name |
+| `Product ID` | Unique product identifier |
+| `Product Name` | Name of the product |
+| `Category` | Product category |
+| `Sub-Category` | Product sub-category |
+| `Sales` | Sales amount |
+| `Quantity` | Quantity sold |
+| `Discount` | Discount applied |
+| `Profit` | Profit earned |
 
 ---
 
-## 🧮 DAX Measures
+## 🛠️ Tools & Technologies
 
-### Core Measures
+| Tool | Purpose |
+|------|---------|  
+| **Power BI Desktop** | Dashboard building & interactive visualizations |
+| **Microsoft Excel** | Data cleaning, preprocessing & exploration |
+| **DAX** | Custom KPI calculations and measures |
+| **GitHub** | Version control & project documentation |
 
-```dax
-// Total Sales
-Total Sales = SUM(Sales_Fact[Sales])
+---
 
-// Total Profit
-Total Profit = SUM(Sales_Fact[Profit])
+## 🗂️ Project Structure
 
-// Profit Margin
-Profit Margin % = DIVIDE([Total Profit], [Total Sales], 0) * 100
-
-// Total Quantity
-Total Quantity = SUM(Sales_Fact[Quantity])
-
-// Total Orders
-Total Orders = DISTINCTCOUNT(Sales_Fact[Order ID])
-
-// Average Order Value
-Average Order Value = DIVIDE([Total Sales], [Total Orders], 0)
 ```
-
-### Time Intelligence Measures
-
-```dax
-// Year-to-Date Sales
-YTD Sales = TOTALYTD([Total Sales], Date_Dim[Date])
-
-// Previous Year Sales
-PY Sales = CALCULATE([Total Sales], SAMEPERIODLASTYEAR(Date_Dim[Date]))
-
-// Sales Growth %
-Sales Growth % = 
-VAR CurrentSales = [Total Sales]
-VAR PreviousSales = [PY Sales]
-RETURN
-    IF(
-        NOT(ISBLANK(PreviousSales)),
-        DIVIDE(CurrentSales - PreviousSales, PreviousSales, 0) * 100,
-        BLANK()
-    )
-
-// Month-over-Month Growth
-MoM Growth % = 
-VAR CurrentMonth = [Total Sales]
-VAR PreviousMonth = CALCULATE([Total Sales], DATEADD(Date_Dim[Date], -1, MONTH))
-RETURN
-    DIVIDE(CurrentMonth - PreviousMonth, PreviousMonth, 0) * 100
-```
-
-### Customer Metrics
-
-```dax
-// Total Customers
-Total Customers = DISTINCTCOUNT(Sales_Fact[Customer ID])
-
-// New Customers
-New Customers = 
-CALCULATE(
-    [Total Customers],
-    FILTER(
-        ALL(Date_Dim),
-        Date_Dim[Date] = 
-            CALCULATE(
-                MIN(Sales_Fact[Order Date]),
-                ALLEXCEPT(Sales_Fact, Sales_Fact[Customer ID])
-            )
-    )
-)
-
-// Repeat Customers
-Repeat Customers = [Total Customers] - [New Customers]
-
-// Customer Lifetime Value
-Customer LTV = 
-AVERAGEX(
-    VALUES(Sales_Fact[Customer ID]),
-    [Total Sales]
-)
-```
-
-### Product Performance
-
-```dax
-// Top Selling Product
-Top Product = 
-TOPN(
-    1,
-    VALUES(Product_Dim[Product Name]),
-    [Total Sales],
-    DESC
-)
-
-// Product Rank
-Product Rank = 
-RANKX(
-    ALL(Product_Dim[Product Name]),
-    [Total Sales],
-    ,
-    DESC,
-    DENSE
-)
-
-// Category Contribution %
-Category % = 
-DIVIDE(
-    [Total Sales],
-    CALCULATE([Total Sales], ALL(Product_Dim[Category])),
-    0
-) * 100
+sales-analytics-dashboard-powerbi-excel/
+│
+├── 📁 assets/              ← Dashboard screenshots
+├── 📁 dashboard/           ← Power BI .pbix file  
+├── 📁 data/                ← Raw CSV dataset
+└── README.md
 ```
 
 ---
 
-## 📈 Key Visualizations
+## 🧹 Data Cleaning & Preparation
 
-### 1. Executive Summary Page
-- **KPI Cards**: Total Sales, Profit, Orders, Customers
-- **Trend Lines**: Sales and profit trends over time
-- **Gauge Charts**: Performance vs. targets
-- **Slicers**: Date range, region, product category filters
+Before building the dashboard, the raw dataset was cleaned and structured in **Microsoft Excel**:
 
-### 2. Sales Performance Analysis
-- **Area Chart**: Monthly sales trends with forecasting
-- **Waterfall Chart**: Sales breakdown by components
-- **Combo Chart**: Sales vs. profit comparison
-- **Matrix**: Hierarchical sales data
-
-### 3. Product Analysis
-- **Bar Chart**: Top 10 products by revenue
-- **Treemap**: Product category distribution
-- **Scatter Plot**: Profit vs. quantity analysis
-- **Table**: Detailed product performance metrics
-
-### 4. Customer Analytics
-- **Donut Chart**: Customer segment distribution
-- **Column Chart**: Sales by customer segment
-- **Funnel Chart**: Customer acquisition journey
-- **Heat Map**: Customer activity patterns
-
-### 5. Geographic Analysis
-- **Map Visual**: Sales distribution by location
-- **Filled Map**: Regional performance
-- **Conditional Formatting**: State-wise comparisons
+✅ Removed duplicate order records  
+✅ Handled missing values in `Discount` and `Profit` columns  
+✅ Created **Order Month** and **Order Year** columns for time-based analysis  
+✅ Created **Profit Margin %** calculated column: `(Profit / Sales) * 100`  
+✅ Standardized `Region` and `State` values for consistency  
+✅ Converted `Order Date` and `Ship Date` to proper date formats  
+✅ Created **Customer Segment** groups for analysis  
+✅ Validated `Sales` against `Quantity` and `Discount` for data integrity
 
 ---
 
-## 💡 Insights & Recommendations
+## 🔍 Exploratory Data Analysis (EDA)
 
-### Key Findings
+### Sales Overview
 
-#### Sales Performance
-- **Total Revenue**: Strong performance with consistent growth
-- **Seasonal Trends**: Peak sales during Q4 (holiday season)
-- **Growth Rate**: Positive year-over-year trend
+- **Total Revenue:** Strong growth trajectory
+- **Total Orders:** Thousands of transactions processed
+- **Average Order Value (AOV):** Varies by customer segment
+- **Total Customers:** Diverse customer base
+- **Total Products:** Wide product catalog
 
-#### Product Insights
-- **Top Categories**: Technology and Office Supplies lead revenue
-- **High Margin Products**: Specific sub-categories show strong profitability
-- **Underperformers**: Some products require pricing or marketing review
+### Revenue by Customer Segment
 
-#### Customer Behavior
-- **Customer Segments**: Corporate customers generate highest revenue
-- **Repeat Rate**: Strong customer retention indicators
-- **Average Order Value**: Varies significantly by segment
+- **Consumer Segment:** Largest contributor to revenue
+- **Corporate Segment:** High-value B2B customers
+- **Home Office Segment:** Growing market
 
-#### Geographic Trends
-- **Top Regions**: West and East regions outperform
-- **Growth Opportunities**: Central region shows potential
-- **Urban vs. Rural**: Urban areas dominate sales
+Customer segments show different purchasing patterns, with corporate customers having higher average order values.
 
-### Strategic Recommendations
+### Revenue by Product Category
 
-1. **Optimize Inventory**
-   - Increase stock for top-performing products
-   - Phase out slow-moving inventory
-   - Adjust for seasonal demand patterns
+- **Technology:** Highest revenue category
+- **Furniture:** Strong consistent sales
+- **Office Supplies:** High volume, lower margins
 
-2. **Customer Engagement**
-   - Implement loyalty programs for repeat customers
-   - Target high-value customer segments
-   - Personalized marketing campaigns
+Product mix indicates technology drives revenue while office supplies maintain volume.
 
-3. **Product Strategy**
-   - Expand high-margin product lines
-   - Bundle products for increased average order value
-   - Review pricing strategy for underperformers
+### Revenue by Region
 
-4. **Regional Focus**
-   - Increase marketing in underperforming regions
-   - Replicate successful strategies from top regions
-   - Consider regional preferences in product mix
+- **West Region:** Highest revenue contributor
+- **East Region:** Second largest market
+- **Central Region:** Moderate performance
+- **South Region:** Growth opportunity
 
-5. **Sales Operations**
-   - Optimize shipping modes for cost efficiency
-   - Reduce delivery times in competitive markets
-   - Implement dynamic pricing strategies
+Geographic analysis reveals concentration in coastal regions with potential for expansion in other areas.
 
----
+### Sales by Time Period
 
-## 🛠️ Technical Specifications
+- **Seasonal Trends:** Peak sales in Q4 (November-December)
+- **Monthly Patterns:** End-of-quarter spikes
+- **Year-over-Year Growth:** Consistent upward trend
 
-### Tools & Technologies
-- **Power BI Desktop**: Version 2.0+
-- **Microsoft Excel**: 2016 or later
-- **DAX**: Data Analysis Expressions
-- **Power Query**: For data transformation
+Time-based analysis shows strong seasonality with holiday shopping driving Q4 performance.
 
-### Features Implemented
-- ✅ Interactive drill-down/drill-through
-- ✅ Dynamic slicers and filters
-- ✅ Time intelligence calculations
-- ✅ Custom tooltips
-- ✅ Bookmarks for navigation
-- ✅ Mobile-optimized layout
-- ✅ Row-level security (RLS) ready
-- ✅ Automated data refresh
+### Profit Analysis
 
-### Performance Optimization
-- Efficient DAX formulas using variables
-- Aggregated tables for faster queries
-- Removed unnecessary columns
-- Optimized relationships and cardinality
+- **High-Profit Products:** Technology items show best margins
+- **Loss-Making Products:** Some discounted items reduce profitability
+- **Profit by Region:** Varies significantly across geographies
+
+Profitability analysis indicates need for pricing strategy optimization.
 
 ---
 
-## 🚀 How to Use
+## 💡 Research Questions & Key Insights
+
+### 1. What is the overall revenue trend?
+
+**Finding:** Revenue shows **consistent growth** year-over-year with strong seasonal peaks in Q4. This indicates healthy business expansion with predictable patterns.
+
+### 2. Which customer segment generates the most revenue?
+
+**Finding:** **Consumer segment** generates the highest revenue, followed by Corporate and Home Office. Consumer customers represent the largest market opportunity.
+
+### 3. Which product categories are most profitable?
+
+**Finding:** **Technology products** show the highest profit margins, while Office Supplies have lower margins but higher volume. Focus should be on high-margin technology while maintaining office supplies volume.
+
+### 4. Which regions show the strongest performance?
+
+**Finding:** **West and East regions** outperform Central and South regions. Regional strategies should focus on maintaining leadership in top regions while growing underperforming markets.
+
+### 5. How do discounts impact profitability?
+
+**Finding:** Heavy discounting reduces profit margins significantly. Strategic discount management is crucial for maintaining profitability while driving volume.
+
+### 6. What are the seasonal sales patterns?
+
+**Finding:** **Q4 shows the highest sales** due to holiday shopping, with November-December peak months. Inventory and staffing should be optimized for seasonal demand.
+
+### 7. Which products have the highest return rates?
+
+**Finding:** Analysis of returns by product category helps identify quality issues and customer satisfaction gaps.
+
+---
+
+## 📊 Dashboard
+
+The Power BI dashboard provides **interactive visualizations** across key sales metrics:
+
+### Key Metrics (KPI Cards)
+
+- Total Sales: **$XXX,XXX**
+- Total Profit: **$XX,XXX**
+- Profit Margin: **XX%**
+- Total Orders: **X,XXX**
+- Total Customers: **X,XXX**
+- Average Order Value: **$XXX**
+
+### Visualizations
+
+| Visualization | Description |
+|---------------|-------------|
+| **Sales by Segment** | Donut chart showing revenue distribution across customer segments |
+| **Sales by Category** | Bar chart displaying category-wise sales performance |
+| **Sales by Region** | Map visualization showing geographical sales distribution |
+| **Sales Trend** | Line chart showing monthly/quarterly sales trends |
+| **Profit by Product** | Horizontal bar chart of product profitability |
+| **Top 10 Customers** | Table showing highest-value customers |
+| **Sales vs Profit** | Scatter plot analyzing sales-profit relationship |
+
+---
+
+## 🚀 How to Run This Project
 
 ### Prerequisites
-1. Install Power BI Desktop (latest version)
-2. Microsoft Excel 2016 or later
 
-### Setup Instructions
+- [Power BI Desktop](https://powerbi.microsoft.com/desktop/) (free)
+- Microsoft Excel or any CSV viewer
+- Git (optional, for cloning)
 
-1. **Clone the Repository**
-   ```bash
-   git clone https://github.com/AkarshKumarM05/sales-analytics-dashboard-powerbi-excel.git
-   cd sales-analytics-dashboard-powerbi-excel
-   ```
+### Steps
 
-2. **Open the Dashboard**
-   - Navigate to the `/dashboard` folder
-   - Open `Sales_Analytics_Dashboard.pbix` in Power BI Desktop
+**1. Clone the repository:**
 
-3. **Load Data**
-   - Dataset is pre-loaded in the .pbix file
-   - To refresh with new data, go to Home → Transform Data
-   - Update the data source path if needed
+```bash
+git clone https://github.com/AkarshKumarM05/sales-analytics-dashboard-powerbi-excel.git
+```
 
-4. **Explore Visualizations**
-   - Use slicers to filter data
-   - Click on visuals for cross-filtering
-   - Hover for detailed tooltips
-   - Use bookmarks for page navigation
+**2. Navigate to the project folder:**
 
-5. **Publish (Optional)**
-   - Sign in to Power BI Service
-   - Click Publish → Select workspace
-   - Configure scheduled refresh
+```bash
+cd sales-analytics-dashboard-powerbi-excel
+```
+
+**3. Open the dataset:**
+
+- Locate `data/Sales_Data.csv`
+- Open in Excel to preview or verify data structure
+
+**4. Open the Power BI Dashboard:**
+
+- Open `dashboard/Sales_Analytics_Dashboard.pbix` in **Power BI Desktop**
+- If prompted, update the data source path to point to `data/Sales_Data.csv` on your local machine
+
+**5. Refresh the data:**
+
+- Go to **Home → Refresh** in Power BI Desktop to load the latest data
+
+**6. Explore the dashboard:**
+
+- Use slicers to filter by region, segment, category, or time period
+- Hover over visuals for detailed tooltips and insights
 
 ---
 
-## 🔮 Future Enhancements
+## ✅ Final Recommendations
 
-### Planned Features
-- [ ] Predictive analytics using machine learning
-- [ ] Advanced forecasting models
-- [ ] Customer churn prediction
-- [ ] Real-time data integration
-- [ ] Integration with CRM systems
-- [ ] Automated email reports
-- [ ] Mobile app integration
-- [ ] Natural language Q&A
-- [ ] R/Python custom visuals
-- [ ] Sentiment analysis on customer feedback
+Based on the sales analytics findings:
 
-### Potential Improvements
-- Enhanced data security with RLS implementation
-- Additional KPIs based on stakeholder feedback
-- Integration with external data sources (weather, events)
-- Advanced statistical analysis
-- Competitive benchmarking
+1. **Optimize Product Mix** — Focus on high-margin technology products while maintaining office supplies volume for consistent revenue.
+
+2. **Implement Strategic Discounting** — Heavy discounts reduce profitability. Use data-driven discount strategies targeting specific products and customer segments.
+
+3. **Expand in Underperforming Regions** — Central and South regions show growth potential. Increase marketing and sales efforts in these areas.
+
+4. **Enhance Customer Segmentation** — Develop targeted strategies for Consumer, Corporate, and Home Office segments based on their unique behaviors.
+
+5. **Leverage Seasonal Trends** — Optimize inventory and staffing for Q4 peak season. Consider promotional campaigns to boost sales in slower quarters.
+
+6. **Focus on Customer Retention** — Identify and nurture high-value customers. Implement loyalty programs to increase customer lifetime value.
+
+7. **Improve Profit Margins** — Review pricing strategy for low-margin products. Consider bundling or value-added services to improve profitability.
+
+---
+
+## 📸 Dashboard Screenshots
+
+**Full Dashboard View**
+
+[Dashboard View](./assets/sales_dashboard_screenshot.png)
 
 ---
 
@@ -393,9 +314,12 @@ DIVIDE(
 **Akarsh Kumar Pandey**  
 B.Com (Hons) | Data Analytics Enthusiast
 
-[![Gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:tulnama02@gmail.com)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/akarshkpandey)
-[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/AkarshKumarM05)
+[![Gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:tulnama02@gmail.com) [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/akarshkpandey) [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/AkarshKumarM05)
+
 ---
 
 > ⭐ If you found this project useful, please give it a star — it helps a lot!
+
+---
+
+**Built with 💙 by Akarsh Kumar Pandey** | *Transforming Data into Insights*
